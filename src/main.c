@@ -1,96 +1,78 @@
+#include <SDL3/SDL_error.h>
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_gpu.h>
-#include <SDL3/SDL_properties.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_render.h>
-#include <SDL3/SDL_timer.h>
+#include <SDL3/SDL_log.h>
+#include <SDL3/SDL_stdinc.h>
 #include <SDL3/SDL_video.h>
 #include <stdio.h>
-#define SDL_MAIN_USE_CALLBACKS 1
-
+#define SDL_MAIN_USE_CALLBACKS
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_main.h>
 
-#include "urigin.h"
+typedef struct _Engine
+{
+    SDL_Window* window;
+} Engine;
 
-#define NUM_POINTS 500
-#define MIN_PIXELS_PER_SECOND 30
-#define MAX_PIXELS_PER_SECOND 60
+SDL_AppResult SDL_AppInit(void** appstate, int argc, char** argv)
+{
+    SDL_SetAppMetadata("Daedalus Engine", "v0.0.1", "com.daedalus-engine");
 
-#define APP_NAME "Urigin-Engine"
-#define APP_VER "0.0.1"
-#define APP_ID "com.urigin.engine"
+    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS) == false)
+    {
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL INIT ERROR: %s", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
 
-static SDL_FPoint points[NUM_POINTS];
-static float point_speeds[NUM_POINTS];
+    SDL_Window* window =
+        SDL_CreateWindow("Daedalus Dev v0.0.1", 800, 800, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL);
+    if (window == NULL)
+    {
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CREATE WINDOW ERROR: %s", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
 
-static Uint64 last_time = 0;
+    SDL_GPUDevice* gpu = SDL_CreateGPUDevice(SDL_GPU_SHADERFORMAT_INVALID, false, NULL);
+    if (gpu == NULL)
+    {
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CREATE GPU ERROR: %s", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
 
-SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
-  SDL_SetAppMetadata(APP_NAME, APP_VER, APP_ID);
+    if (SDL_ClaimWindowForGPUDevice(gpu, window) == false)
+    {
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CLAIM GPU FOR WINDOW ERROR: %s", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
 
-  if (!SDL_Init(SDL_INIT_VIDEO)) {
-    SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
-    return SDL_APP_FAILURE;
-  }
+    Engine engine = {
+        .window = window,
+    };
 
-  static App_State state = {
-      .win = NULL,
-      .renderer = NULL,
-      .texture = NULL,
-      .display = {.w = 0, .h = 0},
-  };
+    *(Engine**)appstate = &engine;
 
-  Display display = GetWindowSize(RESIZABLE);
-  state.display = display;
-
-  if (!SDL_CreateWindowAndRenderer(APP_NAME, display.w, display.h, 0,
-                                   &state.win, &state.renderer)) {
-    SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
-    return SDL_APP_FAILURE;
-  }
-
-  state.texture =
-      SDL_CreateTexture(state.renderer, SDL_PIXELFORMAT_RGBA8888,
-                        SDL_TEXTUREACCESS_STREAMING, display.h, display.w);
-  if (state.texture == NULL) {
-    SDL_Log("Couldn't create texture %s", SDL_GetError());
-    return SDL_APP_FAILURE;
-  }
-
-  state.gpu = SDL_CreateGPUDevice(SDL_GPU_SHADERFORMAT_SPIRV, false, NULL);
-  if (state.gpu == NULL) {
-    SDL_Log("Couldn't create gpu device: %s", SDL_GetError());
-  }
-
-  if (!SDL_ClaimWindowForGPUDevice(state.gpu, state.win)) {
-    SDL_Log("Window couldn't claim gpu: %s", SDL_GetError());
-  }
-
-  // SDL gives us an addres void** for use to use in their other functions.
-  // We are assigning that location to be of an App_State and have the
-  // pointer to our &state.
-  *(App_State **)appstate = &state;
-
-  return SDL_APP_CONTINUE;
+    SDL_ShowWindow(window);
+    return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppIterate(void *appstate) {
-  App_State *state = (App_State *)appstate;
-  SDL_Renderer *renderer = state->renderer;
-  SDL_Texture *texture = state->texture;
-
-  SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE_FLOAT);
-  SDL_RenderClear(renderer);
-
-  UpdateRenderer((App_State *)appstate);
-
-  SDL_RenderPresent(renderer);
-
-  return SDL_APP_CONTINUE;
+SDL_AppResult SDL_AppIterate(void* appstate)
+{
+    return SDL_APP_CONTINUE;
 }
 
-void SDL_AppQuit(void *appstate, SDL_AppResult result) {
-  /* SDL will clean up the window/renderer for us. */
+SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
+{
+    switch (event->type)
+    {
+    case SDL_EVENT_QUIT:
+        return SDL_APP_CONTINUE;
+        break;
+    }
+    return SDL_APP_CONTINUE;
+}
+
+void SDL_AppQuit(void* appstate, SDL_AppResult result)
+{
+    SDL_free(appstate);
 }
