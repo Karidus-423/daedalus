@@ -1,8 +1,9 @@
-#include "main.h"
+#include <SDL3/SDL_iostream.h>
 #include <SDL3/SDL_render.h>
+#include <SDL3/SDL_stdinc.h>
 #include <SDL3/SDL_surface.h>
 
-#define TEXTURE_SIZE 150
+#include "main.h"
 #include "vectors.h"
 
 void DrawPixel(SDL_Renderer* renderer, Vec2 pos, Color color)
@@ -14,14 +15,26 @@ void DrawPixel(SDL_Renderer* renderer, Vec2 pos, Color color)
 void DrawLine2D(SDL_Renderer* renderer, Vec2 alpha, Vec2 beta, Color color)
 {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderLine(renderer, alpha.x, alpha.y, beta.x, beta.y);
+    SDL_RenderLine(renderer, alpha.x, alpha.y, beta.x, beta.y);
+}
+
+void DrawPolygon(SDL_Renderer* renderer, Vec2 alpha, Vec2 beta, Vec2 charlie, Color color)
+{
+    DrawLine2D(renderer, alpha, beta, color);
+    DrawLine2D(renderer, beta, charlie, color);
+    DrawLine2D(renderer, charlie, alpha, color);
+}
+
+Model* LoadModel(char* filename)
+{
+	Model* model = SDL_calloc(1,sizeof(Model));
+	Sint8 vertices[2] = {0,5};
+	model->vertices = vertices;
+
+	return model;
 }
 
 void DrawApp(Engine* engine)
 {
     SDL_Renderer* renderer = engine->renderer;
-
-    DrawPixel(renderer, (Vec2){400, 500}, (Color){0, 255, 255, 255});
-	DrawLine2D(renderer, (Vec2){400,0}, (Vec2){800,800}, (Color){255,0,255,255});
-	DrawLine2D(renderer, (Vec2){0,800}, (Vec2){800,800}, (Color){255,0,255,255});
 }

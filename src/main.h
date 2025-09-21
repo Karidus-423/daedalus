@@ -15,11 +15,12 @@ typedef struct _Engine
 } Engine;
 
 typedef struct _Color{
-	int8_t r;
-	int8_t g;
-	int8_t b;
-	int8_t a;
+	Uint8 r;
+	Uint8 g;
+	Uint8 b;
+	Uint8 a;
 }Color;
 
 void UpdateApp(Engine* engine);
 void DrawApp(Engine* engine);
+
