@@ -1,19 +1,13 @@
-#include <SDL3/SDL_error.h>
-#include <SDL3/SDL_events.h>
-#include <SDL3/SDL_gpu.h>
-#include <SDL3/SDL_log.h>
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_video.h>
-#include <stdio.h>
-#define SDL_MAIN_USE_CALLBACKS
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_init.h>
+#include "main.h"
+#include <SDL3/SDL_pixels.h>
+#include <SDL3/SDL_rect.h>
+#include <SDL3/SDL_render.h>
+
+#define SDL_MAIN_USE_CALLBACKS 1
 #include <SDL3/SDL_main.h>
 
-typedef struct _Engine
-{
-    SDL_Window* window;
-} Engine;
+#define WIDTH 800
+#define HEIGHT 800
 
 SDL_AppResult SDL_AppInit(void** appstate, int argc, char** argv)
 {
@@ -21,43 +15,68 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char** argv)
 
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS) == false)
     {
-        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL INIT ERROR: %s", SDL_GetError());
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL INIT : %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
-    SDL_Window* window =
-        SDL_CreateWindow("Daedalus Dev v0.0.1", 800, 800, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL);
+    SDL_Window* window = SDL_CreateWindow("Daedalus Dev v0.0.1", WIDTH, HEIGHT,
+                                          SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL);
     if (window == NULL)
     {
-        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CREATE WINDOW ERROR: %s", SDL_GetError());
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CREATE WINDOW : %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
-    SDL_GPUDevice* gpu = SDL_CreateGPUDevice(SDL_GPU_SHADERFORMAT_INVALID, false, NULL);
-    if (gpu == NULL)
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
+    if (renderer == NULL)
     {
-        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CREATE GPU ERROR: %s", SDL_GetError());
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CREATE RENDERER : %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
-    if (SDL_ClaimWindowForGPUDevice(gpu, window) == false)
+    SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR32,
+                                             SDL_TEXTUREACCESS_TARGET, WIDTH, HEIGHT);
+    if (texture == NULL)
     {
-        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CLAIM GPU FOR WINDOW ERROR: %s", SDL_GetError());
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CREATE TEXTURE: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
-    Engine engine = {
-        .window = window,
+    Engine* engine = (Engine*)SDL_calloc(1, sizeof(Engine));
+    if (engine == NULL)
+    {
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CALLOC ENGINE: %s", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+    engine->window = window;
+    engine->renderer = renderer;
+    engine->texture = texture;
+
+    *(Engine**)appstate = engine;
+    if (SDL_ShowWindow(window) == false)
+    {
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL SHOW WINDOW: %s", SDL_GetError());
+        return SDL_APP_FAILURE;
     };
 
-    *(Engine**)appstate = &engine;
-
-    SDL_ShowWindow(window);
     return SDL_APP_CONTINUE;
 }
 
 SDL_AppResult SDL_AppIterate(void* appstate)
 {
+    Engine* engine = (Engine*)appstate;
+
+    // UpdateApp(engine);
+
+    SDL_SetRenderTarget(engine->renderer, engine->texture);
+    SDL_SetRenderDrawColor(engine->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(engine->renderer);
+
+    DrawApp(engine);
+
+    SDL_SetRenderTarget(engine->renderer, NULL);
+    SDL_RenderTexture(engine->renderer, engine->texture, NULL, NULL);
+    SDL_RenderPresent(engine->renderer);
     return SDL_APP_CONTINUE;
 }
 
@@ -66,7 +85,7 @@ SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
     switch (event->type)
     {
     case SDL_EVENT_QUIT:
-        return SDL_APP_CONTINUE;
+        return SDL_APP_SUCCESS;
         break;
     }
     return SDL_APP_CONTINUE;
