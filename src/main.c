@@ -1,10 +1,14 @@
-#include "main.h"
+#include <SDL3/SDL_filesystem.h>
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
+#include <stdio.h>
 
 #define SDL_MAIN_USE_CALLBACKS 1
 #include <SDL3/SDL_main.h>
+
+#include "main.h"
+
 
 #define WIDTH 800
 #define HEIGHT 800
@@ -42,12 +46,22 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char** argv)
         return SDL_APP_FAILURE;
     }
 
+	//TODO: Make this not so horrible...
+	char* base_dir = RemoveSubString(SDL_GetBasePath(),"/zig-out/bin/");
+	printf("%s",base_dir);
+	if(base_dir == NULL){
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL GET BASEPATH: %s", SDL_GetError());
+		//TODO: Find a way to handle this instead of exiting.
+        return SDL_APP_FAILURE;
+	}
+
     Engine* engine = (Engine*)SDL_calloc(1, sizeof(Engine));
     if (engine == NULL)
     {
         SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CALLOC ENGINE: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
+	engine->dir = base_dir;
     engine->window = window;
     engine->renderer = renderer;
     engine->texture = texture;

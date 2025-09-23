@@ -12,6 +12,7 @@ typedef struct _Engine
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Texture* texture;
+	const char* dir;
 } Engine;
 
 typedef struct _Color{
@@ -24,3 +25,7 @@ typedef struct _Color{
 void UpdateApp(Engine* engine);
 void DrawApp(Engine* engine);
 
+
+char* RemoveSubString(const char* string,const char* sub);
+
+void LogTestFailure(char* test_name,char* expect, char* actual);

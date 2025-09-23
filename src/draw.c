@@ -1,7 +1,11 @@
+#include <SDL3/SDL_filesystem.h>
 #include <SDL3/SDL_iostream.h>
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_stdinc.h>
+#include <SDL3/SDL_storage.h>
 #include <SDL3/SDL_surface.h>
+
+#include <stdio.h>
 
 #include "main.h"
 #include "vectors.h"

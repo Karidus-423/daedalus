@@ -27,6 +27,7 @@ pub fn build(b: *std.Build) void {
             "main.c",
             "draw.c",
             "update.c",
+            "strings.c",
         },
         .language = .c,
     });
