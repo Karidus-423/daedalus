@@ -35,7 +35,6 @@ pub fn build(b: *std.Build) void {
     exe.linkSystemLibrary("SDL3");
     exe.linkLibC();
 
-
     b.installArtifact(exe);
 
     const run_step = b.step("run", "Run the app");
@@ -48,19 +47,32 @@ pub fn build(b: *std.Build) void {
         run_cmd.addArgs(args);
     }
 
-    // const mod_tests = b.addTest(.{
-    //     .root_module = mod,
-    // });
-
-    // const run_mod_tests = b.addRunArtifact(mod_tests);
-
-    const exe_tests = b.addTest(.{
-        .root_module = exe.root_module,
+    const unit_tests = b.addExecutable(.{
+        .name = "daedalus_tests",
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+            // .imports = &.{
+            //     .{ .name = "daedalus", .module = mod },
+            // },
+        }),
     });
 
-    const run_exe_tests = b.addRunArtifact(exe_tests);
+    unit_tests.root_module.addCSourceFiles(.{
+        .root = b.path("src"),
+        .files = &.{
+            "tests/main_test.c",
+            "strings.c",
+            "tests/test_strings.c",
+        },
+        .language = .c,
+    });
 
-    const test_step = b.step("test", "Run tests");
-    // test_step.dependOn(&run_mod_tests.step);
-    test_step.dependOn(&run_exe_tests.step);
+    unit_tests.linkSystemLibrary("SDL3");
+    unit_tests.linkLibC();
+
+    const unit_tests_step = b.step("test", "Run unit tests");
+    const unit_tests_cmd = b.addRunArtifact(unit_tests);
+    unit_tests_step.dependOn(&unit_tests_cmd.step);
+
 }

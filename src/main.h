@@ -28,4 +28,3 @@ void DrawApp(Engine* engine);
 
 char* RemoveSubString(const char* string,const char* sub);
 
-void LogTestFailure(char* test_name,char* expect, char* actual);
