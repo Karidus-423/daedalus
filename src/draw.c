@@ -29,14 +29,6 @@ void DrawPolygon(SDL_Renderer* renderer, Vec2 alpha, Vec2 beta, Vec2 charlie, Co
     DrawLine2D(renderer, charlie, alpha, color);
 }
 
-Model* LoadModel(char* filename)
-{
-	Model* model = SDL_calloc(1,sizeof(Model));
-	Sint8 vertices[2] = {0,5};
-	model->vertices = vertices;
-
-	return model;
-}
 
 void DrawApp(Engine* engine)
 {
