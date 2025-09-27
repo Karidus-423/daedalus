@@ -27,7 +27,7 @@ pub fn build(b: *std.Build) void {
             "main.c",
             "draw.c",
             "update.c",
-            "strings.c",
+            "soup/soup-strings.c",
         },
         .language = .c,
     });
@@ -62,8 +62,8 @@ pub fn build(b: *std.Build) void {
         .root = b.path("src"),
         .files = &.{
             "tests/main_test.c",
-            "strings.c",
             "tests/test_strings.c",
+            "soup/soup-strings.c",
         },
         .language = .c,
     });

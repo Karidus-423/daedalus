@@ -3,8 +3,8 @@
 
 #include "tests.h"
 
-#define LOG_RED "\33[0:31m\\]"
-#define LOG_FLUSH "\33[0m\\]"
+#define LOG_RED ""
+#define LOG_FLUSH ""
 
 // TODO: Make this better.
 void LogTestFailure(char* test_name, char* expect, char* actual)

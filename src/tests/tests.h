@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../main.h"
+#include "../soup/soup-strings.h"
 
 #define SUCCESS true
 #define FAILURE false

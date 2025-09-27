@@ -3,6 +3,8 @@
 #include <SDL3/SDL.h>
 #include <stdint.h>
 
+#include "./soup/soup-strings.h"
+
 typedef float f32;
 typedef double f64;
 typedef long double f80;
@@ -24,7 +26,3 @@ typedef struct _Color{
 
 void UpdateApp(Engine* engine);
 void DrawApp(Engine* engine);
-
-
-char* RemoveSubString(const char* string,const char* sub);
-
