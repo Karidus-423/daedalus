@@ -47,8 +47,9 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char** argv)
     }
 
 	//TODO: Make this not so horrible...
-	char* base_dir = RemoveSubString(SDL_GetBasePath(),"/zig-out/bin/");
-	printf("%s",base_dir);
+	// char* base_dir = RemoveSubString(SDL_GetBasePath(),"/zig-out/bin/");
+	const char* base_dir = SDL_GetBasePath();
+	// printf("%s",base_dir);
 	if(base_dir == NULL){
         SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL GET BASEPATH: %s", SDL_GetError());
 		//TODO: Find a way to handle this instead of exiting.

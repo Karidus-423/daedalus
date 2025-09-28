@@ -3,7 +3,7 @@
 #include <SDL3/SDL.h>
 #include <stdint.h>
 
-#include "./soup/soup-strings.h"
+#include "../soupc/soup-strings.h"
 
 typedef float f32;
 typedef double f64;
