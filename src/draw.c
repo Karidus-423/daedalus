@@ -33,4 +33,6 @@ void DrawPolygon(SDL_Renderer* renderer, Vec2 alpha, Vec2 beta, Vec2 charlie, Co
 void DrawApp(Engine* engine)
 {
     SDL_Renderer* renderer = engine->renderer;
+
+	DrawLine2D(renderer, (Vec2){0,400}, (Vec2){400,800}, (Color){0,255,0,255});
 }
