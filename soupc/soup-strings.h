@@ -1,16 +1,54 @@
 #ifndef SOUPC_STRINGS
 #define SOUPC_STRINGS
 #include <SDL3/SDL_intrin.h>
+#include <SDL3/SDL_stdinc.h>
+#include <stdio.h>
 
 #define NULL_TERMINATOR_OFFSET 1
 
+typedef struct _StringList{ 
+	char* string;			  
+	_StringList* next;      
+}StringList;				  
+
+//Remove the first instance of the found `arg_sub` in `arg_string`. ==Warning: Memory must be freed.==
+//@return: New string that lacks the passed `arg_sub`.
+//@return-err: NULL
 char* RemoveSubString(const char* string,const char* sub);
-Uint64 StringLength(const char* start);
+//Parse the given `string` by the `delimiter`. ==Warning: Memory must be freed==.
+//@return: Array of strings split by the `delimiter`.
+//@return-err: NULL
+char** ParseStringChar(const char * string, char delimiter);
+//Get the length of a string.
+//@return: A `Uint64` representing the length of `string`.
+//@return-err: If the string is not NULL terminated, return -1.
+Uint64 StringLength(const char* string);
 
 #endif // !SOUPC_STRINGS
 
 
+#define SOUPC_STRINGS_IMPLEMENTED
 #ifdef SOUPC_STRINGS_IMPLEMENTED
+
+char** ParseStringChar(const char *string, char delimiter)
+{
+	Uint64 string_len = StringLength(string);
+
+	StringList* tokens = (StringList*)SDL_malloc(sizeof(StringList));
+
+	//Should shorten string later to save memory.
+	char* tmp_string = (char*)SDL_malloc(sizeof(char*));
+	for (int i = 0; i < string_len; ++i) {
+		//Save current string.
+		tmp_string[i] = string[i];
+		if (string[i] == delimiter) {
+			//Add to final array.
+			//Restart string.
+		}
+	}
+
+	return tokens;
+}
 
 Uint64 StringLength(const char* start)
 {

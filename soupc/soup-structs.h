@@ -1,0 +1,10 @@
+#ifndef SOUP_STRUCTS
+#define SOUP_STRUCTS
+
+
+#endif
+
+#define SOUP_STRUCTS_IMPLEMENT
+#ifdef SOUP_STRUCTS_IMPLEMENT
+
+#endif // SOUP_STRUCTS_IMPLEMENT

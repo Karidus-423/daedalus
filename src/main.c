@@ -56,6 +56,7 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char** argv)
         return SDL_APP_FAILURE;
 	}
 
+
     Engine* engine = (Engine*)SDL_calloc(1, sizeof(Engine));
     if (engine == NULL)
     {
