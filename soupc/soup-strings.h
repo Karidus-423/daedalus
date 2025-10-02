@@ -2,6 +2,7 @@
 #define SOUPC_STRINGS
 #include <SDL3/SDL_intrin.h>
 #include <SDL3/SDL_stdinc.h>
+#include <cstdlib>
 #include <stdio.h>
 
 #define NULL_TERMINATOR_OFFSET 1

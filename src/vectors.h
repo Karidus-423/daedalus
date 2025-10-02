@@ -2,7 +2,6 @@
 
 #include "main.h"
 #include <SDL3/SDL_stdinc.h>
-#include <stdint.h>
 
 typedef struct _Vec2{
 	f32 x;
