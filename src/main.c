@@ -1,14 +1,9 @@
-#include <SDL3/SDL_filesystem.h>
-#include <SDL3/SDL_pixels.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_render.h>
-#include <stdio.h>
-
 #define SDL_MAIN_USE_CALLBACKS 1
+#include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 
-#include "main.h"
-
+#include "engine/engine.h"
+#include "rendering/render.h"
 
 #define WIDTH 800
 #define HEIGHT 800
@@ -56,7 +51,6 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char** argv)
         return SDL_APP_FAILURE;
 	}
 
-
     Engine* engine = (Engine*)SDL_calloc(1, sizeof(Engine));
     if (engine == NULL)
     {
@@ -88,7 +82,7 @@ SDL_AppResult SDL_AppIterate(void* appstate)
     SDL_SetRenderDrawColor(engine->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(engine->renderer);
 
-    DrawApp(engine);
+    RenderApp(engine);
 
     SDL_SetRenderTarget(engine->renderer, NULL);
     SDL_RenderTexture(engine->renderer, engine->texture, NULL, NULL);

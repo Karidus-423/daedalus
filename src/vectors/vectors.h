@@ -1,7 +1,7 @@
 #pragma once
 
-#include "main.h"
-#include <SDL3/SDL_stdinc.h>
+#include <SDL3/SDL.h>
+#include "../types.h"
 
 typedef struct _Vec2{
 	f32 x;
@@ -25,9 +25,3 @@ typedef struct _Polygon{
 	Line3D line_3;
 }Polygon;
 
-// Sint8* vertices;
-// f32* normals;
-typedef struct _Model{
-	Sint8* vertices;
-	f32* normals;
-}Model;

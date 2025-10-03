@@ -18,9 +18,9 @@ pub fn build(b: *std.Build) void {
     engine.addCSourceFiles(.{
         .files = &.{
             "src/main.c",
-            "src/draw.c",
-            "src/update.c",
-            "src/models.c",
+            "src/engine/update.c",
+            "src/rendering/render.c",
+            "src/window/window.c",
         },
     });
 
@@ -35,9 +35,23 @@ pub fn build(b: *std.Build) void {
     const run_engine_step = b.step("run", "Run Daedalus");
     run_engine_step.dependOn(&run_engine_cmd.step);
 
+<<<<<<< HEAD
+    const tests_mod = b.createModule(.{
+        .root_source_file = b.path("tests/test_root.zig"),
+        .target = architecture,
+        .optimize = optimize,
+    });
+
+    const unit_tests = b.addTest(.{
+        .root_module = tests_mod,
+    });
+
+    const run_unit_tests = b.addRunArtifact(unit_tests);
+=======
     const tests = [_][]const u8{
         "tests/soupc/test_soup_strings.zig",
     };
+>>>>>>> 9151e32dbf04bdbee38f957f943444aa35514373
     const tests_step = b.step("test", "Run unit tests");
 
     for (tests) |file| {
