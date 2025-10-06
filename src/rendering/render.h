@@ -14,4 +14,5 @@ typedef struct _Color{
 void RenderPixel(SDL_Renderer* renderer, Vec2 pos, Color color);
 void Render2DLine(SDL_Renderer* renderer, Vec2 alpha, Vec2 beta, Color color);
 void RenderPolygon(SDL_Renderer* renderer, Vec2 alpha, Vec2 beta, Vec2 charlie, Color color);
+
 void RenderApp(Engine* engine);

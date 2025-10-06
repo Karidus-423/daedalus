@@ -5,6 +5,9 @@
 #include "engine/engine.h"
 #include "rendering/render.h"
 
+#define IMPLEMENT_SOUP_IO
+#include "../soupc/soup-io.h"
+
 #define WIDTH 800
 #define HEIGHT 800
 
@@ -41,23 +44,12 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char** argv)
         return SDL_APP_FAILURE;
     }
 
-	//TODO: Make this not so horrible...
-	// char* base_dir = RemoveSubString(SDL_GetBasePath(),"/zig-out/bin/");
-	const char* base_dir = SDL_GetBasePath();
-	// printf("%s",base_dir);
-	if(base_dir == NULL){
-        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL GET BASEPATH: %s", SDL_GetError());
-		//TODO: Find a way to handle this instead of exiting.
-        return SDL_APP_FAILURE;
-	}
-
     Engine* engine = (Engine*)SDL_calloc(1, sizeof(Engine));
     if (engine == NULL)
     {
         SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL CALLOC ENGINE: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
-	engine->dir = base_dir;
     engine->window = window;
     engine->renderer = renderer;
     engine->texture = texture;
@@ -90,16 +82,6 @@ SDL_AppResult SDL_AppIterate(void* appstate)
     return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
-{
-    switch (event->type)
-    {
-    case SDL_EVENT_QUIT:
-        return SDL_APP_SUCCESS;
-        break;
-    }
-    return SDL_APP_CONTINUE;
-}
 
 void SDL_AppQuit(void* appstate, SDL_AppResult result)
 {
