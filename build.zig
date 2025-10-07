@@ -10,6 +10,7 @@ pub fn build(b: *std.Build) void {
             .target = architecture,
             .optimize = optimize,
             .link_libc = true,
+            .link_libcpp = true,
         }),
     });
 
@@ -17,12 +18,12 @@ pub fn build(b: *std.Build) void {
 
     engine.addCSourceFiles(.{
         .files = &.{
-            "src/main.c",
-            "src/window/window.c",
-            "src/engine/update.c",
-            "src/engine/events.c",
-            "src/rendering/render.c",
-            "src/rendering/render-app.c",
+            "src/main.cpp",
+            "src/window/window.cpp",
+            "src/engine/update.cpp",
+            "src/engine/events.cpp",
+            "src/rendering/render.cpp",
+            "src/rendering/render-app.cpp",
         },
     });
 

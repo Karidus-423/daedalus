@@ -2,6 +2,8 @@ const std = @import("std");
 const tests = std.testing;
 const mem = std.mem;
 
+// test "ReadFile"{
+// }
 // test "GetDirectoryFilePaths" {
     //Create a directory with files.
     //Call GetDirecoryFilePaths and pass the virtual directory.
@@ -9,8 +11,6 @@ const mem = std.mem;
 // }
 
 // test "CreateFile"{}
-// test "ReadFile"{
-// }
 // test "WriteFile" {}
 // test "DeleteFile"{}
 // test "CopyFile" {}
