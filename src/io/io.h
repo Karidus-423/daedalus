@@ -1,8 +1,17 @@
-#pragma once
+#ifndef DAEDALUS_IO
+#define DAEDALUS_IO
 
-#include <SDL3/SDL_iostream.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <SDL3/SDL_error.h>
+#include <SDL3/SDL_iostream.h>
 #include <SDL3/SDL_log.h>
+char * ReadFile(const char *filename); // or whatever the exact signature is
 
-char* ReadFile(const char* filename);
+#ifdef __cplusplus
+}
+#endif
 
+#endif

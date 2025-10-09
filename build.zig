@@ -24,9 +24,9 @@ pub fn build(b: *std.Build) void {
             "src/engine/events.cpp",
             "src/rendering/render.cpp",
             "src/rendering/render-app.cpp",
+            "src/io/io.cpp",
         },
     });
-
 
     b.installArtifact(engine);
 
@@ -40,8 +40,7 @@ pub fn build(b: *std.Build) void {
     run_engine_step.dependOn(&run_engine_cmd.step);
 
     const tests = [_][]const u8{
-        "tests/soupc/test_soup_strings.zig",
-        "tests/soupc/test_soup_io.zig",
+        "tests/engine/test_io.zig",
     };
 
     const tests_step = b.step("test", "Run unit tests");
@@ -52,16 +51,24 @@ pub fn build(b: *std.Build) void {
             .target = architecture,
             .optimize = optimize,
             .link_libc = true,
+            .link_libcpp = true,
         });
-        tests_mod.addIncludePath(b.path("soupc"));
+
+        tests_mod.addIncludePath(b.path("src"));
 
         const unit_tests = b.addTest(.{
             .root_module = tests_mod,
         });
+
+        unit_tests.addCSourceFiles(.{
+            .files = &.{
+                "src/io/io.cpp",
+            },
+        });
+
         unit_tests.linkSystemLibrary("SDL3");
 
-        const run_unit_tests =  b.addRunArtifact(unit_tests);
+        const run_unit_tests = b.addRunArtifact(unit_tests);
         tests_step.dependOn(&run_unit_tests.step);
     }
-
 }

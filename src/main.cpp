@@ -6,7 +6,6 @@
 #include "rendering/render.h"
 
 #define IMPLEMENT_SOUP_IO
-#include "../soupc/soup-io.h"
 
 #define WIDTH 800
 #define HEIGHT 800
