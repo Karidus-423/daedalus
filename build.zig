@@ -18,13 +18,13 @@ pub fn build(b: *std.Build) void {
 
     engine.addCSourceFiles(.{
         .files = &.{
-            "src/main.cpp",
-            "src/window/window.cpp",
-            "src/engine/update.cpp",
-            "src/engine/events.cpp",
-            "src/rendering/render.cpp",
-            "src/rendering/render-app.cpp",
-            "src/io/io.cpp",
+            "src/main.c",
+            "src/window/window.c",
+            "src/engine/update.c",
+            "src/engine/events.c",
+            "src/rendering/render.c",
+            "src/rendering/render-app.c",
+            "src/io/io.c",
         },
     });
 
@@ -51,7 +51,6 @@ pub fn build(b: *std.Build) void {
             .target = architecture,
             .optimize = optimize,
             .link_libc = true,
-            .link_libcpp = true,
         });
 
         tests_mod.addIncludePath(b.path("src"));
@@ -62,7 +61,7 @@ pub fn build(b: *std.Build) void {
 
         unit_tests.addCSourceFiles(.{
             .files = &.{
-                "src/io/io.cpp",
+                "src/io/io.c",
             },
         });
 

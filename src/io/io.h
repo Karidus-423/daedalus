@@ -1,17 +1,23 @@
 #ifndef DAEDALUS_IO
 #define DAEDALUS_IO
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #include <SDL3/SDL_error.h>
 #include <SDL3/SDL_iostream.h>
 #include <SDL3/SDL_log.h>
-char * ReadFile(const char *filename); // or whatever the exact signature is
 
-#ifdef __cplusplus
-}
-#endif
+#include "../types/types.h"
+
+#define END_OF_FILE -1
+
+typedef struct _Tokens{
+	char** tokens;
+	Uint32 size;
+}Tokens;
+
+
+Tokens* ParseString(const char *str, char delimiter);
+bool IsFileType(const char* filename, const char* filetype);
+char* ReadFile(const char* filename);
 
 #endif

@@ -1,6 +1,6 @@
 #include "engine.h"
 
-extern "C" SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
+SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
 {
     switch (event->type)
     {
