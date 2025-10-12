@@ -1,55 +1,46 @@
 #include "models.h"
 #include <SDL3/SDL_stdinc.h>
 
-ModelFileData* GetOBJFileData(char* bfr)
+// Model Loading Arena, once LoadModel ends free all the allocations of the model loading process.
+// Model Arena
+
+typedef struct _ModelMetaData
 {
-    ModelFileData* meta_data = SDL_malloc(sizeof(ModelFileData));
+    Uint32 v_size;
+    Uint32 f_size;
+} ModelMetaData;
 
-    char c;
-    Uint32 size = 0;
-    Uint32 i = 0;
-    while (c != END_OF_FILE) {
-        c = bfr[i];
-        if (c == 'v') {
-            if (size == 0) {
-                meta_data->vert_start = i;
-            }
-            ++size;
-        }
-        ++i;
-    }
+ModelMetaData* GetOBJMetaData(char* bfr)
+{
+    ModelMetaData* meta = SDL_malloc(sizeof(ModelMetaData));
+    Uint32 v_size = CountCharInBfr(bfr, 'v');
+    Uint32 f_size = CountCharInBfr(bfr, 'f');
 
-    while (c != END_OF_FILE) {
-        c = bfr[i];
-        if (c == 'f') {
-            if (size == 0) {
-                meta_data->faces_start = i;
-            }
-            ++size;
-        }
-        ++i;
-    }
+    meta->v_size = v_size;
+    meta->f_size = f_size;
 
-    meta_data->faces_size = size;
-
-    return meta_data;
+    return meta;
 }
 
-Vec3* GetOBJVertices(ModelFileData* meta_data,char* bfr){
-}
+Model* LoadOBJMOdel(char* bfr)
+{
+    Model* model = SDL_malloc(sizeof(Model));
+    // Create an array of vertices
+    ModelMetaData* meta_data = GetOBJMetaData(bfr);
+    model->vertices = SDL_malloc(sizeof(Vec3) * meta_data->v_size);
+    model->faces = SDL_malloc(sizeof(Polygon) * meta_data->f_size);
 
-Polygon* GetOBJFaces(ModelFileData* meta_data,char* bfr){
+    // Create an array of faces.
+    return model;
 }
 
 Model* LoadModel(const char* filename)
 {
     char* bfr = ReadFile(filename);
-    Model* model = SDL_malloc(sizeof(Model));
 
-    ModelFileData* meta_data = GetOBJFileData(bfr);
+    if (IsFileType(filename, "obj")) {
+        return LoadOBJModel(bfr);
+    }
 
-    model->vertices = GetOBJVertices(meta_data,bfr);
-	model->faces = GetOBJFaces(meta_data,bfr);
-
-	return model;
+    return NULL;
 }

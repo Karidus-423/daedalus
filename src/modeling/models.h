@@ -12,11 +12,4 @@ typedef struct _Model {
   Polygon *faces;
 } Model;
 
-typedef struct _ModelFileData{
-	Uint32 vert_start;
-	Uint32 vert_size;
-	Uint32 faces_start;
-	Uint32 faces_size;
-}ModelFileData;
-
 Model *LoadModel(const char *filename);
