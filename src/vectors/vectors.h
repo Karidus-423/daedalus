@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL3/SDL.h>
-#include "../types.h"
+#include "../types/types.h"
 
 typedef struct _Vec2{
 	f32 x;

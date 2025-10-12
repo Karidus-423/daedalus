@@ -10,13 +10,13 @@
 
 #define END_OF_FILE -1
 
-typedef struct _Tokens{
-	char** tokens;
+typedef struct _Token{
+	List* tokens;
 	Uint32 size;
-}Tokens;
+}Token;
 
 
-Tokens* ParseString(const char *str, char delimiter);
+Token* ParseString(const char *str, char delimiter);
 bool IsFileType(const char* filename, const char* filetype);
 char* ReadFile(const char* filename);
 
