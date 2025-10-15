@@ -26,9 +26,9 @@ Token* ParseString(Array* str, char delimiter)
     int start = 0;
     int size = 0;
     for (int i = 0; i < str_size; ++i) {
-        char c = str->data[i];
+        char c = ((char*)str->data)[i];
         if (c == delimiter || c == '\0') {
-            char* sub = GetSubArray(str, sizeof(char), start, size);
+            Array* sub = GetSubArray(str, sizeof(char), start, size);
             if (result->tokens == NULL) {
                 List* head = CreateNode(sub);
                 result->tokens = head;
