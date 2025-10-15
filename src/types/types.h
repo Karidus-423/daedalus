@@ -3,6 +3,8 @@
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_stdinc.h>
 
+#define NULL_TERMINATOR '\0'
+
 typedef float f32;
 typedef double f64;
 typedef long double f80;
@@ -24,12 +26,21 @@ typedef struct _Array{
 	Uint32 size;
 }Array;
 
-//Arrays
+typedef struct _Token{
+	List* tokens;
+	Uint32 size;
+}Token;
+
+//STRINGS
+Uint32 CountCharInString(char* bfr, char c);
+Token* ParseString(Array* str, char delimiter);
+
+//ARRAYS
 Array* GetSubArray(Array* arr, size_t t_size, Uint32 start, Uint32 end);
 
-// DYANMIC ARRAYS
+//DYANMIC ARRAYS
 
-// LISTS
+//LISTS
 List *CreateNode(void *data);
 List *ListSearch(List *head, void *data);
 void ListInsert(List* old_node, List* new_node);

@@ -3,49 +3,6 @@
 #include <SDL3/SDL_stdinc.h>
 #include <string.h>
 
-Uint32 CountCharInBfr(char* bfr, char ch)
-{
-    Uint32 count = 0;
-
-    char c = ' ';
-    int i = 0;
-    while (c != END_OF_FILE || c != NULL_TERMINATOR) {
-        c = bfr[i];
-        if (ch == c) {
-            count++;
-        }
-    }
-
-    return count;
-}
-
-// Returns a struct that stores a list of tokens split by the
-// delimiter and the number of tokens.
-Token* ParseString(const char* str, char delimiter)
-{
-    Token* result = SDL_malloc(sizeof(Token));
-    int str_size = ArrayLength(str);
-
-    int start = 0;
-    int size = 0;
-    for (int i = 0; i < str_size; ++i) {
-        char c = str[i];
-        if (c == delimiter || c == '\0') {
-            char* sub = GetSubArray(str, start, size);
-            if (result->tokens == NULL) {
-                List* head = CreateNode(sub);
-                result->tokens = head;
-            } else {
-                List* token = CreateNode(sub);
-                ListInsert(result->tokens, token);
-            }
-            start = i;
-        }
-        ++size;
-    }
-
-    return result;
-}
 
 // Check if the given path/filename is of the passed filetype.
 bool IsFileType(const char* filename, const char* filetype)

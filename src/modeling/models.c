@@ -13,9 +13,9 @@ typedef struct _ModelMetaData
 ModelMetaData* GetOBJMetaData(char* bfr)
 {
     ModelMetaData* meta = SDL_malloc(sizeof(ModelMetaData));
-    Uint32 v_size = CountCharInBfr(bfr, 'v');
-    Uint32 f_size = CountCharInBfr(bfr, 'f');
 
+    Uint32 v_size = CountCharInString(bfr, 'v');
+    Uint32 f_size = CountCharInString(bfr, 'f');
     meta->v_size = v_size;
     meta->f_size = f_size;
 
