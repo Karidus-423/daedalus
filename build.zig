@@ -19,11 +19,16 @@ pub fn build(b: *std.Build) void {
     engine.addCSourceFiles(.{
         .files = &.{
             "src/main.c",
+            "src/types/array.c",
+            "src/types/dynamic-array.c",
+            "src/types/list.c",
+            "src/types/strings.c",
             "src/window/window.c",
             "src/engine/update.c",
             "src/engine/events.c",
             "src/rendering/render.c",
             "src/rendering/render-app.c",
+            "src/modeling/models.c",
             "src/io/io.c",
         },
     });

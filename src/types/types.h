@@ -21,27 +21,32 @@ typedef struct _List {
   struct _List *next;
 } List;
 
+typedef struct _Token{
+	List* tokens;
+	Uint32 size;
+}Token;
+
+// void* data;
+// Uint32 len;
 typedef struct _Array{
 	void* data;
 	Uint32 len;
 }Array;
 
 typedef struct _String{
-	char* chars;
+	const char* chars;
 	Uint32 len;
 }String;
 
-typedef struct _Token{
-	List* tokens;
-	Uint32 size;
-}Token;
 
 //STRINGS
-Uint32 CountCharInString(char* bfr, char c);
-Token* StringParse(Array* str, char delimiter);
+Uint32 String_CountCharsIn (String* bfr, char ch);
+Token* String_Parse(String* str, char delimiter);
+Uint32 String_GetLen(const char* string);
+String* String_GetSub(String* str, Uint32 begin, Uint32 end);
 
 //ARRAYS
-Array* ArrayGetSub(Array* arr, size_t t_size, Uint32 start, Uint32 end);
+Array* ArrayGetSub(Array* arr, size_t t_size, Uint32 begin, Uint32 end);
 
 //DYANMIC ARRAYS
 

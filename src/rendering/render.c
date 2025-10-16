@@ -20,3 +20,6 @@ void RenderPolygon(SDL_Renderer* renderer, Vec2 alpha, Vec2 beta, Vec2 charlie, 
     Render2DLine(renderer, charlie, alpha, color);
 }
 
+void Render_Model(SDL_Renderer* renderer, Model* model){
+}
+

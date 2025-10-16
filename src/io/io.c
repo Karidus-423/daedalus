@@ -9,7 +9,13 @@
 bool IsFileType(const char* filename, const char* filetype)
 {
     // Parse filaname till last set of '.'.
-    Token* extensions = ParseString(filename, '.');
+	String str = {
+		.chars = filename,
+		.len = String_GetLen(filename),
+	};
+
+	//TODO: Fix this two problems.
+    Token* extensions = String_Parse(&str, '.');
     List* last_token = &extensions->tokens[extensions->size];
 
     if (last_token == NULL) {
@@ -19,7 +25,7 @@ bool IsFileType(const char* filename, const char* filetype)
         return false;
     }
 
-    char* extension = last_token->data;
+    char* extension = (char*)last_token->data;
     if (strcmp(filetype, extension)) {
         SDL_free(extensions);
         return true;

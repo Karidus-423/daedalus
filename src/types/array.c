@@ -11,7 +11,7 @@ Array* ArrayGetSub(Array* arr, size_t t_size, Uint32 start, Uint32 end)
     void* sub = SDL_malloc(t_size * sub_size);
     memcpy(sub, arr + (start * t_size), (t_size * sub_size));
 
-	result->size = sub_size;
+	result->len = sub_size;
 	result->data = sub;
 
     return result;
