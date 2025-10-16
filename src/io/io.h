@@ -11,6 +11,6 @@
 #define END_OF_FILE -1
 
 bool IsFileType(const char* filename, const char* filetype);
-char* ReadFile(const char* filename);
+String* ReadFile(const char* filename);
 
 #endif

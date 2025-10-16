@@ -3,7 +3,7 @@
 
 
 //TODO: Implement
-Array* GetSubArray(Array* arr, size_t t_size, Uint32 start, Uint32 end)
+Array* ArrayGetSub(Array* arr, size_t t_size, Uint32 start, Uint32 end)
 {
     Uint32 sub_size = end - start;
 	Array* result = SDL_malloc(sizeof(Array));

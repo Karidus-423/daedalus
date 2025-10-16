@@ -1,5 +1,18 @@
 #include "types.h"
 
+Uint32 GetStringLen(const char* string){
+	Uint32 size = 0;
+
+	char c; 
+	int i = 0;
+	while (c != NULL_TERMINATOR) {
+		c = string[i];
+		++i;
+	}
+
+	return size;
+}
+
 Uint32 CountCharInString(char* bfr, char ch)
 {
     Uint32 count = 0;
@@ -18,7 +31,7 @@ Uint32 CountCharInString(char* bfr, char ch)
 
 // Returns a struct that stores a list of tokens split by the
 // delimiter and the number of tokens.
-Token* ParseString(Array* str, char delimiter)
+Token* StringParse(Array* str, char delimiter)
 {
     Token* result = SDL_malloc(sizeof(Token));
     int str_size = str->size;

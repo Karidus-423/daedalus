@@ -23,8 +23,13 @@ typedef struct _List {
 
 typedef struct _Array{
 	void* data;
-	Uint32 size;
+	Uint32 len;
 }Array;
+
+typedef struct _String{
+	char* chars;
+	Uint32 len;
+}String;
 
 typedef struct _Token{
 	List* tokens;
@@ -33,10 +38,10 @@ typedef struct _Token{
 
 //STRINGS
 Uint32 CountCharInString(char* bfr, char c);
-Token* ParseString(Array* str, char delimiter);
+Token* StringParse(Array* str, char delimiter);
 
 //ARRAYS
-Array* GetSubArray(Array* arr, size_t t_size, Uint32 start, Uint32 end);
+Array* ArrayGetSub(Array* arr, size_t t_size, Uint32 start, Uint32 end);
 
 //DYANMIC ARRAYS
 
