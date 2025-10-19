@@ -31,11 +31,23 @@ List* String_Parse(String* str, char delimiter)
     return token_list;
 }
 
-// TODO: Test before String_Parse
 //@return: String* of substring of str.
 String* String_GetSub(const String* str, Uint32 begin, Uint32 end)
 {
-	//TODO: Implement
+    String* sub = SDL_malloc(sizeof(String));
+    sub->len = end - begin + 1;
+    sub->chars = SDL_malloc(sizeof(char) * sub->len);
+
+    char tmp[sub->len];
+	tmp[sub->len - 1] = '\0';
+
+    for (Uint32 i = 0; i < sub->len - 1; ++i) {
+        tmp[i] = str->chars[begin + i];
+    }
+
+	strcpy((char*)sub->chars, tmp);
+
+    return sub;
 }
 
 //@return : Uint32 | Represents the number of characters in the passed char*, counting the

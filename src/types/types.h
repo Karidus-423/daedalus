@@ -9,6 +9,9 @@ typedef float f32;
 typedef double f64;
 typedef long double f80;
 
+// @field : void *data		|
+// @field : Uint32 stored   | 
+// @field : Uint32 limit	|
 typedef struct _DyanmicArray{
   void *data;
   Uint32 stored;
@@ -22,6 +25,8 @@ typedef struct _Array{
 	Uint32 len;
 }Array;
 
+// const char* chars;
+// @field : Uint32 len |  Always includes the NULL_TERMINATOR in its count.
 typedef struct _String{
 	const char* chars;
 	Uint32 len;

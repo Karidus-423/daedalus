@@ -12,7 +12,7 @@ test "Test String_GetSub" {
     const input : dt.String = .{ .chars = "examplestringedge",.len = 18 };
     const in_ptr: [*c]const dt.String = @ptrCast(&input);
 
-    const actual: [*c] dt.String  = dt.String_GetSub(in_ptr, 7, 14);
+    const actual: [*c] dt.String  = dt.String_GetSub(in_ptr, 7, 13);
     const expect = Zig_StringGetSub("examplestringedge", 7, 13);
 
     try testing.expect(mem.eql(u8, expect, mem.span(actual.*.chars)));
