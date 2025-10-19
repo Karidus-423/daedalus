@@ -2,7 +2,7 @@
 #include <SDL3/SDL_log.h>
 #include <SDL3/SDL_stdinc.h>
 
-List* CreateNode(void* data)
+List* List_CreateNode(void* data)
 {
     List* node = SDL_malloc(sizeof(List));
     if (node == NULL) {
@@ -21,7 +21,7 @@ List* CreateNode(void* data)
 //@return
 //   |  NULL: data not found in list.
 //   |  List*: node where data was found.
-List* ListSearch(List* head, void* data)
+List* List_Search(List* head, void* data)
 {
     List* peak = head;
     while (peak != NULL) {
@@ -35,7 +35,7 @@ List* ListSearch(List* head, void* data)
 }
 
 // Inserts the new_node after the old_node.
-void ListInsert(List* old_node, List* new_node)
+void List_Insert(List* old_node, List* new_node)
 {
     new_node->next = old_node->next;
     // Checks if old_node->next not a tail.
@@ -74,7 +74,7 @@ void ListDelete(List** head_ref, List* node)
 }
 
 // Deletes and entire list.
-void ListFree(List* head)
+void List_Free(List* head)
 {
     while (head != NULL) {
         List* tmp = head;

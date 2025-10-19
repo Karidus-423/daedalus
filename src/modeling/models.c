@@ -4,8 +4,6 @@
 
 // Model Loading Arena, once LoadModel ends free all the allocations of the model loading process.
 // Model Arena
-
-
 typedef struct _ModelMetaData
 {
     Uint32 v_size;
@@ -50,9 +48,9 @@ Model* Model_LoadOBJ(String* bfr)
 
 Model* Model_Load(const char* filename)
 {
-    String* bfr = ReadFile(filename);
+    String* bfr = File_Read(filename);
 
-    if (IsFileType(filename, "obj")) {
+    if (File_IsType(filename, "obj")) {
         return Model_LoadOBJ(bfr);
     }
 

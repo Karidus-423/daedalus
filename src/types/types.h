@@ -9,22 +9,11 @@ typedef float f32;
 typedef double f64;
 typedef long double f80;
 
-typedef struct _DyanmicArray {
+typedef struct _DyanmicArray{
   void *data;
   Uint32 stored;
   Uint32 limit;
-} DyamicArray;
-
-typedef struct _List {
-  struct _List *prev;
-  void *data;
-  struct _List *next;
-} List;
-
-typedef struct _Token{
-	List* tokens;
-	Uint32 size;
-}Token;
+} DynamicArray;
 
 // void* data;
 // Uint32 len;
@@ -38,10 +27,17 @@ typedef struct _String{
 	Uint32 len;
 }String;
 
+typedef struct _List {
+  struct _List *prev;
+  void *data;
+  struct _List *next;
+} List;
+
+
 
 //STRINGS
 Uint32 String_CountCharsIn (String* bfr, char ch);
-Token* String_Parse(String* str, char delimiter);
+List* String_Parse(String* str, char delimiter);
 Uint32 String_GetLen(const char* string);
 String* String_GetSub(String* str, Uint32 begin, Uint32 end);
 
@@ -51,8 +47,8 @@ Array* ArrayGetSub(Array* arr, size_t t_size, Uint32 begin, Uint32 end);
 //DYANMIC ARRAYS
 
 //LISTS
-List *CreateNode(void *data);
-List *ListSearch(List *head, void *data);
-void ListInsert(List* old_node, List* new_node);
-void ListDelete(List** head, List* node);
-void ListFree(List *head);
+List *List_CreateNode(void *data);
+List *List_Search(List *head, void *data);
+void List_Insert(List* old_node, List* new_node);
+void List_Delete(List** head, List* node);
+void List_Free(List *head);

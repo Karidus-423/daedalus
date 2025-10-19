@@ -16,8 +16,7 @@ pub fn build(b: *std.Build) void {
 
     engine.linkSystemLibrary("SDL3");
 
-    engine.addCSourceFiles(.{
-        .files = &.{
+    const engine_files = &.{
             "src/main.c",
             "src/types/array.c",
             "src/types/dynamic-array.c",
@@ -30,7 +29,12 @@ pub fn build(b: *std.Build) void {
             "src/rendering/render-app.c",
             "src/modeling/models.c",
             "src/io/io.c",
-        },
+    };
+
+
+    engine.addCSourceFiles(.{
+        .files = engine_files, 
+            
     });
 
     b.installArtifact(engine);
@@ -64,10 +68,22 @@ pub fn build(b: *std.Build) void {
             .root_module = tests_mod,
         });
 
+        const test_files = &.{
+            "src/types/array.c",
+            "src/types/dynamic-array.c",
+            "src/types/list.c",
+            "src/types/strings.c",
+            "src/window/window.c",
+            "src/engine/update.c",
+            "src/engine/events.c",
+            "src/rendering/render.c",
+            "src/rendering/render-app.c",
+            "src/modeling/models.c",
+            "src/io/io.c",
+        };
+
         unit_tests.addCSourceFiles(.{
-            .files = &.{
-                "src/io/io.c",
-            },
+            .files = test_files,
         });
 
         unit_tests.linkSystemLibrary("SDL3");

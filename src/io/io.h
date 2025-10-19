@@ -10,7 +10,7 @@
 
 #define END_OF_FILE -1
 
-bool IsFileType(const char* filename, const char* filetype);
-String* ReadFile(const char* filename);
+bool File_IsType(const char* filename, const char* filetype);
+String* File_Read(const char* filename);
 
 #endif
