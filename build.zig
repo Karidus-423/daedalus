@@ -50,6 +50,7 @@ pub fn build(b: *std.Build) void {
 
     const tests = [_][]const u8{
         "tests/engine/test_io.zig",
+        "tests/engine/test_types.zig",
     };
 
     const tests_step = b.step("test", "Run unit tests");

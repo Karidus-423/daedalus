@@ -5,41 +5,11 @@
 #include <string.h>
 
 
+//TODO: Implement
 // Check if the given path/filename is of the passed filetype.
 bool File_IsType(const char* filename, const char* filetype)
 {
-    // Parse filaname till last set of '.'.
-	String str = {
-		.chars = filename,
-		.len = String_GetLen(filename),
-	};
-
-	//TODO: Fix this two problems.
-    Token* extensions = String_Parse(&str, '.');
-	if (extensions == NULL) {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "IsFileType no file extensions for %s", filename);
-
-        SDL_free(extensions);
-        return false;
-	}
-
-	char* ft = "obj";
-    List* last_token = List_Search(extensions->list, ft);
-	if (last_token == NULL) {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "List Search  could not find, %s", ft);
-
-        SDL_free(extensions);
-        return false;
-	}
-
-    char* extension = (char*)last_token->data;
-    if (strcmp(filetype, extension)) {
-        SDL_free(extensions);
-        return true;
-    }
-
-    SDL_free(extensions);
-    return false;
+	return true;
 }
 
 // Return the contents of a file as a char* buffer.

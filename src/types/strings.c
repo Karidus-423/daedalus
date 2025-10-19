@@ -1,5 +1,6 @@
 #include "types.h"
 #include <SDL3/SDL_stdinc.h>
+#include <stdio.h>
 #include <string.h>
 
 // Parses src and makes dest the String that was split by the delimiter.
@@ -7,7 +8,7 @@
 //@return : void
 void String_ParseStream(String* src, String* dest, char delimiter);
 
-//TODO: Test after String_GetSub
+// TODO: Test after String_GetSub
 //@return : List of tokens split by the passed delimiter.
 List* String_Parse(String* str, char delimiter)
 {
@@ -19,10 +20,10 @@ List* String_Parse(String* str, char delimiter)
 
             if (token_list->data == NULL) {
                 memcpy(token_list, List_CreateNode(tok), sizeof(List));
-            }else{
-				List* new_tok = List_CreateNode(tok);
-				List_Insert(token_list, new_tok);
-			}
+            } else {
+                List* new_tok = List_CreateNode(tok);
+                List_Insert(token_list, new_tok);
+            }
             start = i + 1;
         }
     }
@@ -30,19 +31,15 @@ List* String_Parse(String* str, char delimiter)
     return token_list;
 }
 
-//TODO: Test before String_Parse
-String* String_GetSub(String* str, Uint32 begin, Uint32 end)
+// TODO: Test before String_Parse
+//@return: String* of substring of str.
+String* String_GetSub(const String* str, Uint32 begin, Uint32 end)
 {
-    String* sub = SDL_malloc(sizeof(String));
-	
-	//TODO: Finish implementation.
-	memcpy(sub->chars,str->chars + begin,sizeof(char));
-
-    return sub;
+	//TODO: Implement
 }
 
 //@return : Uint32 | Represents the number of characters in the passed char*, counting the
-//NULL_TERMINATOR '\0'
+// NULL_TERMINATOR '\0'
 Uint32 String_GetLen(const char* string)
 {
     Uint32 size = 0;
@@ -72,4 +69,3 @@ Uint32 String_CountCharsIn(String* bfr, char ch)
 
     return count;
 }
-

@@ -4,21 +4,18 @@ const mem = std.mem;
 const io = @cImport(@cInclude("io/io.h"));
 const dt = @cImport(@cInclude("types/types.h"));
 
-
-fn Zig_StringGetSub(str: []u8, start: u32, end:u32) []u8{
-    return &str[start..end];
+fn Zig_StringGetSub(str: []const u8, start: u32, end: u32) []const u8 {
+    return str[start..end];
 }
 
 test "Test String_GetSub" {
-    const input: dt.String = .{
-        .chars = "examplestring",
-        .len = 14,
-    };
+    const input : dt.String = .{ .chars = "examplestringedge",.len = 18 };
+    const in_ptr: [*c]const dt.String = @ptrCast(&input);
 
-    const expect = Zig_StringGetSub(input.chars, 7, 14);
-    const actual = dt.String_GetSub(input, 7, 14);
+    const actual: [*c] dt.String  = dt.String_GetSub(in_ptr, 7, 14);
+    const expect = Zig_StringGetSub("examplestringedge", 7, 13);
 
-    testing.expect(mem.eql(u8, expect, actual.chars));
+    try testing.expect(mem.eql(u8, expect, mem.span(actual.*.chars)));
 }
 
 // fn Zig_ParseString(string: []u8, char: u8) !void {

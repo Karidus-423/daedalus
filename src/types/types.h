@@ -39,7 +39,7 @@ typedef struct _List {
 Uint32 String_CountCharsIn (String* bfr, char ch);
 List* String_Parse(String* str, char delimiter);
 Uint32 String_GetLen(const char* string);
-String* String_GetSub(String* str, Uint32 begin, Uint32 end);
+String* String_GetSub(const String* str, Uint32 begin, Uint32 end);
 
 //ARRAYS
 Array* ArrayGetSub(Array* arr, size_t t_size, Uint32 begin, Uint32 end);
