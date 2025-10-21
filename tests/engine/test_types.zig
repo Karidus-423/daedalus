@@ -1,5 +1,6 @@
-const std = @import("std");
 const testing = std.testing;
+const debug = std.debug;
+const std = @import("std");
 const mem = std.mem;
 const io = @cImport(@cInclude("io/io.h"));
 const dt = @cImport(@cInclude("types/types.h"));
@@ -18,17 +19,24 @@ test "Test String_GetSub" {
     try testing.expect(mem.eql(u8, expect, mem.span(actual.*.chars)));
 }
 
-// fn Zig_ParseString(string: []u8, char: u8) !void {
-// }
+test "Test String_Parse" {
+    const input: dt.String = .{.chars = "filename.extension1.extension2", .len = 31};
+    const in_ptr: [*c]const dt.String = @ptrCast(&input);
 
-// test "Test String_Parse" {
-//     const input: dt.String = .{
-//         .chars = "filename.extension1.extension2",
-//         .len = 31,
-//     };
-//
-//     const expected = dt.String_Parse(input, '.');
-//     const actual = Zig_ParseString(input,'.');
-//
-//     testing.expect(mem.eql(u8, expected, actual));
-// }
+    const actual: [*c] dt.List = dt.String_Parse(in_ptr, '.');
+
+    var node_num: i8 = 0;
+    while (actual.*.next != null) {
+        //TODO: Find the expression to cast a void* as String*. Read translated.zig and translate.c to
+        //understand how to type cast the void*.
+        const node_data_type: [*c]const dt.String = @ptrCast(@alignCast(actual.*.data));
+        const actual_data: []const u8 = mem.span(node_data_type.*.chars);
+        try switch (node_num) {
+            0 => testing.expect(mem.eql(u8,"filename", actual_data)),
+            1 => testing.expect(mem.eql(u8,"extension1", actual_data)),
+            2 => testing.expect(mem.eql(u8,"extension2", actual_data)),
+            else => testing.expect(false)
+        };
+        node_num += 1;
+    }
+}

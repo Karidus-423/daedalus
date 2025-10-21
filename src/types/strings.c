@@ -10,7 +10,7 @@ void String_ParseStream(String* src, String* dest, char delimiter);
 
 // TODO: Test after String_GetSub
 //@return : List of tokens split by the passed delimiter.
-List* String_Parse(String* str, char delimiter)
+List* String_Parse(const String* str, char delimiter)
 {
     List* head = List_CreateNode(NULL);
 

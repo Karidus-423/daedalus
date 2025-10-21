@@ -32,6 +32,9 @@ typedef struct _String{
 	Uint32 len;
 }String;
 
+// @field : struct _List *prev | The node that comes before it, if null node is head;
+// @field : void *data | Data address of any type. Type needs to be known at compile to access;
+// @field : struct _List *next | The node that comes after it, if null node is tail;
 typedef struct _List {
   struct _List *prev;
   void *data;
@@ -42,7 +45,7 @@ typedef struct _List {
 
 //STRINGS
 Uint32 String_CountCharsIn (String* bfr, char ch);
-List* String_Parse(String* str, char delimiter);
+List* String_Parse(const String* str, char delimiter);
 Uint32 String_GetLen(const char* string);
 String* String_GetSub(const String* str, Uint32 begin, Uint32 end);
 
