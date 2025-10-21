@@ -12,23 +12,28 @@ void String_ParseStream(String* src, String* dest, char delimiter);
 //@return : List of tokens split by the passed delimiter.
 List* String_Parse(String* str, char delimiter)
 {
-    List* token_list = SDL_malloc(sizeof(List));
-    Uint32 start = 0;
-    for (Uint32 i = 0; i < str->len; ++i) {
-        if (str->chars[i] == delimiter) {
-            String* tok = String_GetSub(str, start, i);
+    List* head = List_CreateNode(NULL);
 
-            if (token_list->data == NULL) {
-                memcpy(token_list, List_CreateNode(tok), sizeof(List));
-            } else {
-                List* new_tok = List_CreateNode(tok);
-                List_Insert(token_list, new_tok);
+    Uint32 start = 0;
+    for (Uint32 i = 0; i <= str->len; ++i) {
+        char ch = str->chars[i];
+        if (ch == delimiter || ch == '\0') {
+            if (start - i != 0) {
+
+                String* tok = String_GetSub(str, start, i);
+
+                if (head == NULL) {
+                    head = List_CreateNode(tok);
+                } else {
+                    List* new_tok = List_CreateNode(tok);
+                    List_Insert(head, new_tok);
+                }
+                start = i + 1;
             }
-            start = i + 1;
         }
     }
 
-    return token_list;
+    return head;
 }
 
 //@return: String* of substring of str.
@@ -39,13 +44,13 @@ String* String_GetSub(const String* str, Uint32 begin, Uint32 end)
     sub->chars = SDL_malloc(sizeof(char) * sub->len);
 
     char tmp[sub->len];
-	tmp[sub->len - 1] = '\0';
+    tmp[sub->len - 1] = '\0';
 
     for (Uint32 i = 0; i < sub->len - 1; ++i) {
         tmp[i] = str->chars[begin + i];
     }
 
-	strcpy((char*)sub->chars, tmp);
+    strcpy((char*)sub->chars, tmp);
 
     return sub;
 }
