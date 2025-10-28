@@ -10,7 +10,6 @@ pub fn build(b: *std.Build) void {
             .target = architecture,
             .optimize = optimize,
             .link_libc = true,
-            .link_libcpp = true,
         }),
     });
 

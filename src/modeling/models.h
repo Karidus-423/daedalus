@@ -12,5 +12,5 @@ typedef struct _Model {
   Polygon *faces;
 } Model;
 
-Model *Model_Load(const char *filename);
-Model* Model_LoadOBJ(String* bfr);
+Model* Model_load(String* filename);
+Model* Model_loadOBJ(String* bfr);

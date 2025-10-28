@@ -35,8 +35,8 @@ List* List_Search(List* head, void* data)
 }
 
 // Inserts the new_node after the old_node.
-void List_Insert(List* old_node, List* new_node)
-{
+void List_Insert(List* old_node, List* new_node){
+	new_node->prev = old_node;
     new_node->next = old_node->next;
     // Checks if old_node->next not a tail.
     if (new_node->next != NULL) {
@@ -47,6 +47,21 @@ void List_Insert(List* old_node, List* new_node)
     old_node->next = new_node;
     return;
 }
+
+//TODO: Decide to implement this or not.
+// // Inserts the new_node before the old_node.
+// void List_InsertBefore(List* old_node, List* new_node)
+// {
+//     new_node->next = old_node->next;
+//     // Checks if old_node->next not a tail.
+//     if (new_node->next != NULL) {
+//         new_node->next->prev = new_node;
+//     }
+//
+//     new_node->prev = old_node;
+//     old_node->next = new_node;
+//     return;
+// }
 
 // Deletes a node from the list.
 void ListDelete(List** head_ref, List* node)
