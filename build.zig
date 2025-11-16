@@ -9,17 +9,19 @@ pub fn build(b: *std.Build) void {
     });
 
     const daedalus_files : []const []const u8 = &.{
-        "app-init.c",
+        "app-init.cpp",
+        "utils/utils.cpp"
     };
 
     exe.addCSourceFiles(.{
         .root = b.path("src"),
         .files = daedalus_files,
-        .language = .c,
+        .language = .cpp,
     });
 
     exe.linkSystemLibrary("SDL3");
     exe.linkLibC();
+    exe.linkLibCpp();
 
     b.installArtifact(exe);
 
